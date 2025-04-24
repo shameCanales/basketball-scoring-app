@@ -7,6 +7,10 @@ function App() {
   console.log("welcome");
   alert("THere is a bug");
 
+  const newFeature = () => {
+    console.log('this is a new feature')
+  }
+
   const [teamData, setTeamData] = useState({
     home: {
       name: "home",
@@ -21,7 +25,8 @@ function App() {
 
   function handleClick(team, point) {
     setTeamData((prevData) => {
-      const newScore = prevData[team].score + point;
+      
+      
       return {
         ...prevData,
         [team]: {
@@ -30,6 +35,7 @@ function App() {
         }, //how? 1. copy the previous data 2. modify the score of the team 3. return the new object then react will detect the change and rerender the component.
       };
     });
+    newFeature()
   }
 
   function handleClear() {
