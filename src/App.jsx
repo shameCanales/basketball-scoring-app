@@ -5,6 +5,7 @@ import Clear from "./components/Clear";
 
 function App() {
   console.log("welcome");
+  alert("THere is a bug");
 
   const [teamData, setTeamData] = useState({
     home: {
