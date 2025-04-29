@@ -2,64 +2,51 @@ import { useState } from "react";
 import "./App.css";
 import Team from "./components/Team";
 import Clear from "./components/Clear";
+import { scoreActions } from "./store/score-slice";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
-  console.log("welcome");
-  alert("THere is a bug");
+  const dispatch = useDispatch();
+  const teamData = useSelector((state) => state.score);
+  console.log(teamData.guest.name);
 
-  const newFeature = () => {
-    console.log('this is a new feature')
-  }
+  // const [teamData, setTeamData] = useState({
+  //   home: {
+  //     name: "home",
+  //     // score: 0,
+  //     score: 0,
+  //   },
+  //   guest: {
+  //     name: "guest",
+  //     score: 3,
+  //   },
+  // });
 
-  const [teamData, setTeamData] = useState({
-    home: {
-      name: "home",
-      // score: 0,
-      score: 0,
-    },
-    guest: {
-      name: "guest",
-      score: 3,
-    },
-  });
-
-  function handleClick(team, point) {
-    setTeamData((prevData) => {
-      
-      
-      return {
-        ...prevData,
-        [team]: {
-          ...prevData[team],
-          score: newScore,
-        }, //how? 1. copy the previous data 2. modify the score of the team 3. return the new object then react will detect the change and rerender the component.
-      };
-    });
-    newFeature()
-  }
+  // function handleClick(team, point) {
+  //   setTeamData((prevData) => {
+  //     return {
+  //       ...prevData,
+  //       [team]: {
+  //         ...prevData[team],
+  //         score: newScore,
+  //       }, //how? 1. copy the previous data 2. modify the score of the team 3. return the new object then react will detect the change and rerender the component.
+  //     };
+  //   });
+  // }
 
   function handleClear() {
-    setTeamData({
-      home: {
-        name: "home",
-        score: 0,
-      },
-      guest: {
-        name: "guest",
-        score: 0,
-      },
-    });
+    dispatch(scoreActions.reset());
   }
 
-  const editableTeamName = (
-    <input
-      type="text"
-      name="teamName"
-      className="teamName"
-      value={teamData.home.name}
-      required
-    />
-  );
+  // const editableTeamName = (
+  //   <input
+  //     type="text"
+  //     name="teamName"
+  //     className="teamName"
+  //     value={teamData.home.name}
+  //     required
+  //   />
+  // );
 
   return (
     <div className="p-6 m-6 rounded-2xl text-center text-neutral-50 bg-gradient-to-tl from-neutral-900 to-neutral-700  ">
@@ -72,14 +59,12 @@ function App() {
           teamColor={"blue"}
           teamName={teamData.home.name}
           teamScore={teamData.home.score}
-          onHandleClick={handleClick}
         />
 
         <Team
           teamColor={"red"}
           teamName={teamData.guest.name}
           teamScore={teamData.guest.score}
-          onHandleClick={handleClick}
         />
       </section>
 
