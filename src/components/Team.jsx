@@ -1,10 +1,12 @@
 import Button from "./Button.jsx";
 import { scoreActions } from "../store/score-slice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Team({ teamColor, teamName, teamScore }) {
   const dispatch = useDispatch();
+  const activeTeam = useSelector((state) => state.shotclock.shootingTeam);
   let color = teamColor === "blue" ? "bg-blue-800" : "bg-red-500";
+  let activeIndicator = activeTeam === teamName && "border-8 rounded-2xl";
 
   const handleIncrement = (point) => {
     dispatch(scoreActions.increment({ team: teamName, point: point }));
@@ -12,7 +14,7 @@ export default function Team({ teamColor, teamName, teamScore }) {
 
   return (
     <>
-      <div className={`team ${color} p-4 text-xs`}>
+      <div className={`team ${color}  p-4 text-xs ${activeIndicator}`}>
         <p className="teamName font-bold uppercase font-[montserrat]">
           {teamName}
         </p>
