@@ -1,5 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
-import { startShotclock, stopShotclock } from "../store/shotclockThunks";
+import {
+  startShotclock,
+  stopShotclock,
+  pauseShotclock,
+} from "../store/shotclockThunks";
+import ShotClockButton from "./shotclockButton";
 // import { useEffect } from "react";
 
 export default function ShotClock() {
@@ -9,10 +14,19 @@ export default function ShotClock() {
 
   const handleStartShotclock = () => {
     dispatch(startShotclock());
-
     return () => {
       dispatch(stopShotclock()); // Stop the shot clock when the component unmounts
     };
+  };
+
+  const handlePauseShotclock = () => {
+    dispatch(pauseShotclock());
+    console.log("pause");
+  };
+
+  const handleSwitchTeam = () => {
+    dispatch(stopShotclock());
+    dispatch(startShotclock());
   };
 
   // useEffect(() => {
@@ -26,12 +40,12 @@ export default function ShotClock() {
     <div>
       <h1 className="text-8xl font-black my-8">{shotclockTime}</h1>
       <p>current team: {shootingTeam}</p>
-      <button
-        className="bg-stone-50 text-stone-800 px-8 py-4 font-bold m-8 rounded-xs"
-        onClick={handleStartShotclock}
-      >
-        START
-      </button>
+
+      <div>
+        <ShotClockButton handleClick={handleStartShotclock} label="PLAY" />
+        <ShotClockButton handleClick={handlePauseShotclock} label="PAUSE" />
+        <ShotClockButton handleClick={handleSwitchTeam} label="SWITCH" />
+      </div>
     </div>
   );
 }

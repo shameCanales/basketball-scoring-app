@@ -22,3 +22,7 @@ export const stopShotclock = () => (dispatch) => {
   dispatch(shotclockActions.resetTime()); // reset the time to 24 seconds
   dispatch(shotclockActions.switchTeam()); // switch the team po
 };
+
+export const pauseShotclock = () => (dispatch) => {
+  clearInterval(shotclockInterval)
+}
