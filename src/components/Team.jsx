@@ -1,8 +1,9 @@
 import Button from "./Button.jsx";
 import { scoreActions } from "../store/score-slice.js";
 import { useDispatch, useSelector } from "react-redux";
+import { stopShotclock, startShotclock } from "../store/shotclockThunks.js";
 
-export default function Team({ teamColor, teamName, teamScore }) {
+export default function Team({ teamColor, teamName, teamScore, disabled }) {
   const dispatch = useDispatch();
   const activeTeam = useSelector((state) => state.shotclock.shootingTeam);
   let color = teamColor === "blue" ? "bg-blue-800" : "bg-red-500";
@@ -10,6 +11,8 @@ export default function Team({ teamColor, teamName, teamScore }) {
 
   const handleIncrement = (point) => {
     dispatch(scoreActions.increment({ team: teamName, point: point }));
+    dispatch(stopShotclock());
+    dispatch(startShotclock());
   };
 
   return (
@@ -25,16 +28,19 @@ export default function Team({ teamColor, teamName, teamScore }) {
             team={teamName}
             point={1}
             onHandleClick={() => handleIncrement(1)}
+            disabled={disabled}
           />
           <Button
             team={teamName}
             point={2}
             onHandleClick={() => handleIncrement(2)}
+            disabled={disabled}
           />
           <Button
             team={teamName}
             point={3}
             onHandleClick={() => handleIncrement(3)}
+            disabled={disabled}
           />
         </div>
       </div>

@@ -1,19 +1,12 @@
-import { useState } from "react";
 import "./App.css";
 import Team from "./components/Team";
 import Clear from "./components/Clear";
-import { scoreActions } from "./store/score-slice";
 import ShotClock from "./components/ShotClock";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 function App() {
-  const dispatch = useDispatch();
+  const shootingTeam = useSelector((state) => state.shotclock.shootingTeam);
   const teamData = useSelector((state) => state.score);
-  console.log(teamData.guest.name);
-
-  function handleClear() {
-    dispatch(scoreActions.reset());
-  }
 
   return (
     <div className="p-6 m-6 rounded-2xl text-center text-neutral-50 bg-gradient-to-tl from-neutral-900 to-neutral-700  ">
@@ -28,16 +21,18 @@ function App() {
           teamColor={"blue"}
           teamName={teamData.home.name}
           teamScore={teamData.home.score}
+          disabled={shootingTeam !== "home"}
         />
 
         <Team
           teamColor={"red"}
           teamName={teamData.guest.name}
           teamScore={teamData.guest.score}
+          disabled={shootingTeam !== "guest"}
         />
       </section>
 
-      <Clear onHandleClick={handleClear} />
+      <Clear />
     </div>
   );
 }

@@ -4,8 +4,8 @@ import {
   stopShotclock,
   pauseShotclock,
 } from "../store/shotclockThunks";
+import { shotclockActions } from "../store/shotclock-slice";
 import ShotClockButton from "./shotclockButton";
-// import { useEffect } from "react";
 
 export default function ShotClock() {
   const dispatch = useDispatch();
@@ -15,26 +15,17 @@ export default function ShotClock() {
   const handleStartShotclock = () => {
     dispatch(startShotclock());
     return () => {
-      dispatch(stopShotclock()); // Stop the shot clock when the component unmounts
+      dispatch(stopShotclock());
     };
   };
 
   const handlePauseShotclock = () => {
     dispatch(pauseShotclock());
-    console.log("pause");
   };
 
   const handleSwitchTeam = () => {
-    dispatch(stopShotclock());
-    dispatch(startShotclock());
+    dispatch(shotclockActions.switchTeam());
   };
-
-  // useEffect(() => {
-  //   dispatch(startShotclock()); // Start the shot clock when the component mounts
-  //   return () => {
-  //     dispatch(stopShotclock());
-  //   };
-  // }, [dispatch]);
 
   return (
     <div>
